@@ -116,19 +116,24 @@ async function getCategories() {
     const data = await res.json();
 
     const select = document.getElementById("categoryId");
-    const filterSelect = document.getElementById("filterCategory");
-filterSelect.innerHTML += `
-  <option value="${cat.id}">${cat.categoryName}</option>
-`;
-    select.innerHTML = `<option value="">Select Category</option>`;
+const filterSelect = document.getElementById("filterCategory");
 
-    data.forEach(cat => {
-      select.innerHTML += `
-        <option value="${cat.id}">
-          ${cat.categoryName}
-        </option>
-      `;
-    });
+select.innerHTML = `<option value="">Select Category</option>`;
+filterSelect.innerHTML = `<option value="">All Categories</option>`;
+
+data.forEach(cat => {
+  select.innerHTML += `
+    <option value="${cat.id}">
+      ${cat.categoryName}
+    </option>
+  `;
+
+  filterSelect.innerHTML += `
+    <option value="${cat.id}">
+      ${cat.categoryName}
+    </option>
+  `;
+});
 
   } catch (err) {
     console.log(err);
