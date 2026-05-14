@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkVault | My Bookmarks</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .bookmark-card{
+            border:none;
+            border-radius:20px;
+            box-shadow:0 8px 25px rgba(0,0,0,.08);
+            transition:.3s;
+        }
+
+        .bookmark-card:hover{
+            transform:translateY(-6px);
+        }
+
+        .action-icon{
+            width:38px;
+            height:38px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            cursor:pointer;
+            transition:.3s;
+            font-size:20px;
+            background:#f5f5f5;
+        }
+
+        .action-icon:hover{
+            transform:scale(1.1);
+        }
+
+        .favorite.active{
+            color:#ffc107;
+            background:#fff7db;
+        }
+
+        .archived.active{
+            color:#6c757d;
+            background:#ececec;
+        }
+
+        .url-box{
+            background:#f8f9fa;
+            padding:10px;
+            border-radius:10px;
+            font-size:14px;
+            word-break:break-all;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark mb-4 nav-custom">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="#">
+            <i class="bi bi-bookmark-heart-fill me-2"></i>LinkVault
+        </a>
+
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav me-auto ms-4">
+                <li class="nav-item">
+                    <a class="nav-link" href="categories.html">
+                        <i class="bi bi-grid me-1"></i>Categories
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="bookmarks.html">
+                        <i class="bi bi-bookmark me-1"></i>Bookmarks
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="notes.html">
+                        <i class="bi bi-journal-text me-1"></i>Notes
+                    </a>
+                </li>
+            </ul>
+
+            <button class="btn btn-outline-light btn-sm px-3">
+                Logout
+            </button>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h2 class="fw-bold">My Bookmarks</h2>
+            <p class="text-muted">Access your saved links instantly</p>
+        </div>
+
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookmarkModal">
+            <i class="bi bi-plus-circle-fill me-2"></i>
+            Add Bookmark
+        </button>
+    </div>
+<div class="row mb-4 g-2">
+
+  <!-- search -->
+  <div class="col-md-4">
+    <input type="text" id="searchInput" class="form-control" placeholder="Search title or URL...">
+  </div>
+
+  <!-- category -->
+  <div class="col-md-3">
+    <select id="filterCategory" class="form-control">
+      <option value="">All Categories</option>
+    </select>
+  </div>
+
+  <!-- favorite -->
+  <div class="col-md-2">
+    <select id="filterFavorite" class="form-control">
+      <option value="">Favorite</option>
+      <option value="true">Only Favorites</option>
+    </select>
+  </div>
+
+  <!-- archive -->
+  <div class="col-md-2">
+    <select id="filterArchive" class="form-control">
+      <option value="">Archive</option>
+      <option value="true">Archived</option>
+      <option value="false">Not Archived</option>
+    </select>
+  </div>
+
+</div>
+
+    <div class="row g-4" id="bookmarksGrid">
+
+        <!-- Example Card -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card bookmark-card p-4 h-100">
+
+                <!-- icons -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <span class="badge bg-primary">
+                        Programming
+                    </span>
+
+                    <div class="d-flex gap-2">
+
+                        <!-- favorite false default -->
+                        <div class="action-icon favorite"
+                             onclick="this.classList.toggle('active')">
+                            <i class="bi bi-star"></i>
+                        </div>
+
+                        <!-- archived false default -->
+                        <div class="action-icon archived"
+                             onclick="this.classList.toggle('active')">
+                            <i class="bi bi-archive"></i>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- title -->
+                <h5 class="fw-bold mb-3">
+                    JavaScript Docs
+                </h5>
+
+                <!-- url -->
+                <div class="url-box mb-3">
+                    https://developer.mozilla.org
+                </div>
+
+                <!-- created -->
+                <small class="text-muted d-block mb-4">
+                    <i class="bi bi-calendar-event me-1"></i>
+                    Created: 09 May 2026
+                </small>
+
+                <!-- buttons -->
+                <div class="mt-auto d-flex gap-2">
+                    <a href="#" class="btn btn-primary w-100">
+                        Visit
+                    </a>
+
+                    <button class="btn btn-outline-secondary">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+
+                    <button class="btn btn-outline-danger">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- modal -->
+<div class="modal fade" id="bookmarkModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Add Bookmark</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <form id="bookmarkForm">
+
+          <input class="form-control mb-3"
+                 id="title"
+                 placeholder="Bookmark title"
+                 required>
+
+          <input class="form-control mb-3"
+                 id="url"
+                 type="url"
+                 placeholder="https://example.com"
+                 required>
+
+        <select class="form-control mb-3" id="categoryId" required>
+  <option value="">Select Category</option>
+</select>
+                 <input type="hidden" id="bookmarkId">
+
+          <button class="btn btn-primary w-100">
+            Save Bookmark
+          </button>
+
+        </form>
+        
+
+      </div>
+    </div>
+  </div>
+</div>
+<section class="container mt-5 mb-5" id="bookmarkNotesSection">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h3 class="fw-bold mb-1">
+        <i class="bi bi-journal-text me-2 text-primary"></i>
+        Bookmark Notes
+      </h3>
+      <p class="text-muted mb-0">
+        All notes related to this bookmark
+      </p>
+    </div>
+  </div>
+
+  <div class="row g-4" id="bookmarkNotesContainer">
+
+
+  </div>
+
+</section>
+<div class="modal fade" id="bookmarkNoteModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-4 border-0 shadow">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Add Bookmark Note</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <form id="bookmarkNoteForm">
+
+         <input type="hidden" id="bookmarkNoteId">
+
+          <textarea
+            class="form-control mb-3"
+            id="noteContent"
+            rows="4"
+            placeholder="Write your notecontent..."
+            required
+          ></textarea>
+
+
+          <button class="btn btn-primary w-100">
+            Save Note
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="bookmark.js"></script>
+</body>
+</html>
